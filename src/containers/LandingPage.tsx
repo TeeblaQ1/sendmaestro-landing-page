@@ -4,76 +4,53 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-// import ToggleButton from '@mui/material/ToggleButton';
-// import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-// import AutoAwesomeRoundedIcon from '@mui/icons-material/AutoAwesomeRounded';
 import AppAppBar from '../components/AppAppBar';
 import Hero from '../components/Hero';
-import LogoCollection from '../components/LogoCollection';
-import Highlights from '../components/Highlights';
-import Pricing from '../components/Pricing';
-import Features from '../components/Features';
-import Testimonials from '../components/Testimonials';
-import FAQ from '../components/FAQ';
+import HeroTrustSection from '../components/HeroTrustSection';
+import MarketingSections from '../components/MarketingSections';
+import WaitlistSection from '../components/WaitlistSection';
 import Footer from '../components/Footer';
 import getLPTheme from './getLPTheme';
-
-// interface ToggleCustomThemeProps {
-//   showCustomTheme: Boolean;
-//   toggleCustomTheme: () => void;
-// }
-
-// function ToggleCustomTheme({
-//   showCustomTheme,
-//   toggleCustomTheme,
-// }: ToggleCustomThemeProps) {
-//   return (
-//     <Box
-//       sx={{
-//         display: 'flex',
-//         flexDirection: 'column',
-//         alignItems: 'center',
-//         width: '100dvw',
-//         position: 'fixed',
-//         bottom: 24,
-//       }}
-//     >
-//       <ToggleButtonGroup
-//         color="primary"
-//         exclusive
-//         value={showCustomTheme}
-//         onChange={toggleCustomTheme}
-//         aria-label="Platform"
-//         sx={{
-//           backgroundColor: 'background.default',
-//           '& .Mui-selected': {
-//             pointerEvents: 'none',
-//           },
-//         }}
-//       >
-//         <ToggleButton value>
-//           <AutoAwesomeRoundedIcon sx={{ fontSize: '20px', mr: 1 }} />
-//           Custom theme
-//         </ToggleButton>
-//         <ToggleButton value={false}>Material Design 2</ToggleButton>
-//       </ToggleButtonGroup>
-//     </Box>
-//   );
-// }
+import { SITE } from '../content/site';
 
 export default function LandingPage() {
   const [mode, setMode] = React.useState<PaletteMode>('dark');
-  // const [showCustomTheme, setShowCustomTheme] = React.useState(true);
   const LPtheme = createTheme(getLPTheme(mode));
-  // const defaultTheme = createTheme({ palette: { mode } });
+
+  React.useEffect(() => {
+    const previousTitle = document.title;
+    document.title = `${SITE.productName} — ${SITE.tagline}`;
+
+    const descriptionContent = SITE.metaDescription;
+    let metaDescription = document.querySelector('meta[name="description"]');
+    let created = false;
+    if (!metaDescription) {
+      metaDescription = document.createElement('meta');
+      metaDescription.setAttribute('name', 'description');
+      document.head.appendChild(metaDescription);
+      created = true;
+    }
+
+    const previousDescription = metaDescription.getAttribute('content');
+    metaDescription.setAttribute('content', descriptionContent);
+
+    return () => {
+      document.title = previousTitle;
+      if (metaDescription) {
+        if (previousDescription !== null) {
+          metaDescription.setAttribute('content', previousDescription);
+        } else if (created) {
+          metaDescription.remove();
+        } else {
+          metaDescription.removeAttribute('content');
+        }
+      }
+    };
+  }, []);
 
   const toggleColorMode = () => {
     setMode((prev) => (prev === 'dark' ? 'light' : 'dark'));
   };
-
-  // const toggleCustomTheme = () => {
-  //   setShowCustomTheme((prev) => !prev);
-  // };
 
   return (
     <ThemeProvider theme={LPtheme}>
@@ -81,23 +58,14 @@ export default function LandingPage() {
       <AppAppBar mode={mode} toggleColorMode={toggleColorMode} />
       <Hero />
       <Box sx={{ bgcolor: 'background.default' }}>
-        <LogoCollection />
-        <Features />
+        <HeroTrustSection />
         <Divider />
-        <Testimonials />
+        <MarketingSections />
         <Divider />
-        <Highlights />
-        <Divider />
-        <Pricing />
-        <Divider />
-        <FAQ />
+        <WaitlistSection />
         <Divider />
         <Footer />
       </Box>
-      {/* <ToggleCustomTheme
-        showCustomTheme={showCustomTheme}
-        toggleCustomTheme={toggleCustomTheme}
-      /> */}
     </ThemeProvider>
   );
 }

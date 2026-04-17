@@ -11,12 +11,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Drawer from '@mui/material/Drawer';
 import MenuIcon from '@mui/icons-material/Menu';
 import ToggleColorMode from './ToggleColorMode';
-
-const logoStyle = {
-  width: '140px',
-  height: 'auto',
-  cursor: 'pointer',
-};
+import BrandMark from './BrandMark';
 
 interface AppAppBarProps {
   mode: PaletteMode;
@@ -35,7 +30,6 @@ function AppAppBar({ mode, toggleColorMode }: AppAppBarProps) {
     const offset = 128;
     if (sectionElement) {
       const targetScroll = sectionElement.offsetTop - offset;
-      sectionElement.scrollIntoView({ behavior: 'smooth' });
       window.scrollTo({
         top: targetScroll,
         behavior: 'smooth',
@@ -61,7 +55,6 @@ function AppAppBar({ mode, toggleColorMode }: AppAppBarProps) {
             sx={(theme) => ({
               display: 'flex',
               alignItems: 'center',
-              justifyContent: 'space-between',
               flexShrink: 0,
               borderRadius: '999px',
               bgcolor:
@@ -74,99 +67,91 @@ function AppAppBar({ mode, toggleColorMode }: AppAppBarProps) {
               borderColor: 'divider',
               boxShadow:
                 theme.palette.mode === 'light'
-                  ? `0 0 1px rgba(85, 166, 246, 0.1), 1px 1.5px 2px -1px rgba(85, 166, 246, 0.15), 4px 4px 12px -2.5px rgba(85, 166, 246, 0.15)`
+                  ? `0 0 1px rgba(82, 113, 255, 0.12), 1px 1.5px 2px -1px rgba(56, 182, 255, 0.12), 4px 4px 12px -2.5px rgba(82, 113, 255, 0.1)`
                   : '0 0 1px rgba(2, 31, 59, 0.7), 1px 1.5px 2px -1px rgba(2, 31, 59, 0.65), 4px 4px 12px -2.5px rgba(2, 31, 59, 0.65)',
             })}
           >
             <Box
               sx={{
-                flexGrow: 1,
                 display: 'flex',
                 alignItems: 'center',
-                ml: '-18px',
-                px: 0,
+                flex: 1,
+                minWidth: 0,
               }}
             >
-              <img
-                src={
-                  'https://assets-global.website-files.com/61ed56ae9da9fd7e0ef0a967/61f12e6faf73568658154dae_SitemarkDefault.svg'
-                }
-                style={logoStyle}
-                alt="logo of sitemark"
-              />
-              <Box sx={{ display: { xs: 'none', md: 'flex' } }}>
-                <MenuItem
-                  onClick={() => scrollToSection('features')}
-                  sx={{ py: '6px', px: '12px' }}
-                >
-                  <Typography variant="body2" color="text.primary">
-                    Features
-                  </Typography>
-                </MenuItem>
-                <MenuItem
-                  onClick={() => scrollToSection('testimonials')}
-                  sx={{ py: '6px', px: '12px' }}
-                >
-                  <Typography variant="body2" color="text.primary">
-                    Testimonials
-                  </Typography>
-                </MenuItem>
-                <MenuItem
-                  onClick={() => scrollToSection('highlights')}
-                  sx={{ py: '6px', px: '12px' }}
-                >
-                  <Typography variant="body2" color="text.primary">
-                    Highlights
-                  </Typography>
-                </MenuItem>
-                <MenuItem
-                  onClick={() => scrollToSection('pricing')}
-                  sx={{ py: '6px', px: '12px' }}
-                >
-                  <Typography variant="body2" color="text.primary">
-                    Pricing
-                  </Typography>
-                </MenuItem>
-                <MenuItem
-                  onClick={() => scrollToSection('faq')}
-                  sx={{ py: '6px', px: '12px' }}
-                >
-                  <Typography variant="body2" color="text.primary">
-                    FAQ
-                  </Typography>
-                </MenuItem>
+              <Box
+                role="button"
+                tabIndex={0}
+                sx={{ cursor: 'pointer', display: 'inline-flex', alignItems: 'center' }}
+                onClick={() => scrollToSection('hero')}
+                onKeyDown={(event) => {
+                  if (event.key === 'Enter' || event.key === ' ') scrollToSection('hero');
+                }}
+              >
+                <BrandMark compact iconSize={18} />
               </Box>
             </Box>
             <Box
               sx={{
                 display: { xs: 'none', md: 'flex' },
+                flex: 1,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <MenuItem
+                onClick={() => scrollToSection('product')}
+                sx={{ py: '6px', px: '12px' }}
+              >
+                <Typography variant="body2" color="text.primary">
+                  Product
+                </Typography>
+              </MenuItem>
+              <MenuItem
+                onClick={() => scrollToSection('how-it-works')}
+                sx={{ py: '6px', px: '12px' }}
+              >
+                <Typography variant="body2" color="text.primary">
+                  How it works
+                </Typography>
+              </MenuItem>
+              <MenuItem
+                onClick={() => scrollToSection('about')}
+                sx={{ py: '6px', px: '12px' }}
+              >
+                <Typography variant="body2" color="text.primary">
+                  About
+                </Typography>
+              </MenuItem>
+              <MenuItem
+                onClick={() => scrollToSection('waitlist')}
+                sx={{ py: '6px', px: '12px' }}
+              >
+                <Typography variant="body2" color="text.primary">
+                  Waitlist
+                </Typography>
+              </MenuItem>
+            </Box>
+            <Box
+              sx={{
+                display: { xs: 'none', md: 'flex' },
+                flex: 1,
                 gap: 0.5,
                 alignItems: 'center',
+                justifyContent: 'flex-end',
               }}
             >
               <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
               <Button
                 color="primary"
-                variant="text"
-                size="small"
-                component="a"
-                href="http://localhost:3000/auth/sign-in"
-                target="_blank"
-              >
-                Sign in
-              </Button>
-              <Button
-                color="primary"
                 variant="contained"
                 size="small"
-                component="a"
-                href="http://localhost:3000/auth/sign-up"
-                target="_blank"
+                onClick={() => scrollToSection('waitlist')}
               >
-                Get Started
+                Join the waitlist
               </Button>
             </Box>
-            <Box sx={{ display: { sm: '', md: 'none' } }}>
+            <Box sx={{ display: { xs: 'flex', md: 'none' } }}>
               <Button
                 variant="text"
                 color="primary"
@@ -195,42 +180,19 @@ function AppAppBar({ mode, toggleColorMode }: AppAppBarProps) {
                   >
                     <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
                   </Box>
-                  <MenuItem onClick={() => scrollToSection('features')}>
-                    Features
-                  </MenuItem>
-                  <MenuItem onClick={() => scrollToSection('testimonials')}>
-                    Testimonials
-                  </MenuItem>
-                  <MenuItem onClick={() => scrollToSection('highlights')}>
-                    Highlights
-                  </MenuItem>
-                  <MenuItem onClick={() => scrollToSection('pricing')}>
-                    Pricing
-                  </MenuItem>
-                  <MenuItem onClick={() => scrollToSection('faq')}>FAQ</MenuItem>
+                  <MenuItem onClick={() => scrollToSection('product')}>Product</MenuItem>
+                  <MenuItem onClick={() => scrollToSection('how-it-works')}>How it works</MenuItem>
+                  <MenuItem onClick={() => scrollToSection('about')}>About</MenuItem>
+                  <MenuItem onClick={() => scrollToSection('waitlist')}>Waitlist</MenuItem>
                   <Divider />
                   <MenuItem>
                     <Button
                       color="primary"
                       variant="contained"
-                      component="a"
-                      href="http://localhost:3000/auth/sign-up"
-                      target="_blank"
+                      onClick={() => scrollToSection('waitlist')}
                       sx={{ width: '100%' }}
                     >
-                      Get Started
-                    </Button>
-                  </MenuItem>
-                  <MenuItem>
-                    <Button
-                      color="primary"
-                      variant="outlined"
-                      component="a"
-                      href="http://localhost:3000/auth/sign-in"
-                      target="_blank"
-                      sx={{ width: '100%' }}
-                    >
-                      Sign in
+                      Join the waitlist
                     </Button>
                   </MenuItem>
                 </Box>

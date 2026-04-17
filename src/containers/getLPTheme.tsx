@@ -20,31 +20,32 @@ declare module '@mui/material/styles/createPalette' {
   interface PaletteColor extends ColorRange {}
 }
 
+/** Transcit brand: #38b6ff (accent) · #5271ff (primary) */
 export const brand = {
-  50: '#ecf0ff',
-  100: '#dde3ff',
-  200: '#c2cbff',
-  300: '#9ca7ff',
-  400: '#7578ff',
-  500: '#635bff',
-  600: '#4e36f5',
-  700: '#432ad8',
-  800: '#3725ae',
-  900: '#302689',
-  950: '#1e1650',
+  50: '#eef3ff',
+  100: '#dce6ff',
+  200: '#b8caff',
+  300: '#8ad4ff',
+  400: '#38b6ff',
+  500: '#5271ff',
+  600: '#4563eb',
+  700: '#3a52c9',
+  800: '#2c3d99',
+  900: '#1f2a6d',
+  950: '#121840',
 };
 
 export const secondary = {
-  50: '#F9F0FF',
-  100: '#E9CEFD',
-  200: '#D49CFC',
-  300: '#B355F6',
-  400: '#750AC2',
-  500: '#6709AA',
-  600: '#490679',
-  700: '#3B0363',
-  800: '#2F024F',
-  900: '#23023B',
+  50: '#e8f9ff',
+  100: '#c4efff',
+  200: '#8ee0ff',
+  300: '#5ccfff',
+  400: '#38b6ff',
+  500: '#2ca3e6',
+  600: '#1e8fd4',
+  700: '#1772ad',
+  800: '#125a8a',
+  900: '#0c3d5c',
 };
 
 export const gray = {
@@ -84,7 +85,7 @@ const getDesignTokens = (mode: PaletteMode) => ({
       ...(mode === 'dark' && {
         contrastText: brand[100],
         light: brand[300],
-        main: brand[400],
+        main: brand[500],
         dark: brand[800],
       }),
     },
