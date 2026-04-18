@@ -151,7 +151,15 @@ const getDesignTokens = (mode: PaletteMode) => ({
     },
   },
   typography: {
-    fontFamily: ['"Inter", "sans-serif"'].join(','),
+    fontFamily: [
+      '"Nunito Sans"',
+      '"Inter"',
+      '"Avenir Next"',
+      '"Segoe UI"',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+    ].join(','),
     h1: {
       fontSize: 60,
       fontWeight: 600,
