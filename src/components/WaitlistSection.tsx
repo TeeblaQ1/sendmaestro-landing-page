@@ -24,6 +24,30 @@ function waitlistEndpoint(): string | null {
   return `${normalized}/api/waitlist`;
 }
 
+function successCopy(userType: WaitlistUserType | ''): {
+  title: string;
+  body: string;
+} {
+  if (userType === 'client') {
+    return {
+      title: 'Client access request received',
+      body: 'We will notify you as soon as client onboarding opens for early teams.',
+    };
+  }
+
+  if (userType === 'partner') {
+    return {
+      title: 'Partner application received',
+      body: 'You are in line for early partner onboarding and platform updates.',
+    };
+  }
+
+  return {
+    title: 'Early access request received',
+    body: 'Thanks for joining the waitlist. We will reach out when access opens.',
+  };
+}
+
 function UserTypeOption({
   value,
   label,
@@ -158,15 +182,17 @@ export default function WaitlistSection() {
   };
 
   if (status === 'success') {
+    const copy = successCopy(userType);
+
     return (
       <Box id="waitlist" sx={{ py: { xs: 8, sm: 12 }, bgcolor: 'background.paper' }}>
         <Container maxWidth="sm">
           <Alert severity="success" sx={{ borderRadius: 2 }}>
             <Typography variant="subtitle1" fontWeight={600} gutterBottom>
-              You're on the list
+              {copy.title}
             </Typography>
             <Typography variant="body2">
-              Thanks for joining early access. We will reach out at {email}.
+              {copy.body} We will reach out at {email}.
             </Typography>
           </Alert>
         </Container>
